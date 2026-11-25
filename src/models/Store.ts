@@ -1,20 +1,5 @@
 import { Schema, model, InferSchemaType } from "mongoose";
 
-const locationSchema = new Schema(
-  {
-    type: {
-      type: String,
-      enum: ["Point"],
-      default: "Point",
-    },
-    coordinates: {
-      type: [Number],
-      required: true,
-    },
-  },
-  { _id: false },
-);
-
 const storeSchema = new Schema(
   {
     name: {
@@ -43,17 +28,11 @@ const storeSchema = new Schema(
       min: 0,
       max: 5,
     },
-    location: {
-      type: locationSchema,
-      default: undefined,
-    },
   },
   {
     timestamps: true,
   },
 );
-
-storeSchema.index({ location: "2dsphere" });
 
 export type StoreType = InferSchemaType<typeof storeSchema>;
 
