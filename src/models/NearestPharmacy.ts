@@ -25,6 +25,12 @@ const nearestPharmacySchema = new Schema({
     type: Number,
     default: 0,
   },
+  status: {
+    type: String,
+    enum: ["OPEN", "CLOSE"],
+    required: true,
+    default: "OPEN",
+  },
 });
 
 export type NearestPharmacyType = InferSchemaType<typeof nearestPharmacySchema>;

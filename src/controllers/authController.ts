@@ -33,6 +33,12 @@ export const registerUser = async (req: Request, res: Response) => {
       return;
     }
 
+    const secret = process.env.JWT_SECRET;
+
+    if (!secret) {
+      throw new Error("JWT_SECRET is not configured");
+    }
+
     const user = await User.create({
       name,
       email,
@@ -40,10 +46,15 @@ export const registerUser = async (req: Request, res: Response) => {
       password,
     });
 
+    const token = jwt.sign({ userId: user._id.toString() }, secret, {
+      expiresIn: "1d",
+    });
+
     res.status(201).json({
       status: "success",
       message: "User registered successfully",
       data: {
+        token,
         user: {
           _id: user._id,
           name: user.name,

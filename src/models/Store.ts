@@ -28,6 +28,12 @@ const storeSchema = new Schema(
       min: 0,
       max: 5,
     },
+    status: {
+      type: String,
+      enum: ["OPEN", "CLOSE"],
+      required: true,
+      default: "OPEN",
+    },
   },
   {
     timestamps: true,
